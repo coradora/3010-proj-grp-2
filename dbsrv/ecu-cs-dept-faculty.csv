@@ -1,0 +1,28 @@
+ID,Honorific,First,MI,Last,Email,Phone,Office,Research Interests,Rank,Remarks,CurrentlyEmployed
+1,Dr.,Karl,,Arahamson,abrahamsonk@ecu.edu,252-328-9689,Sci-Tech C113,Programming Languages,Associate Professor,Undergraduate Program Director,Yes
+2,Ms.,Sheaneatha,D,Applewhite-Hopkins,applewhitehopkins16@ecu.edu,252-328-9680,Sci-Tech C107,,Administrative Assistant,,Yes
+3,Dr.,Maral,,Azizi,azizim19@ecu.edu,252-328-9680,Sci-Tech C108,"Software Engineering, Information Retrieval, Database Design, Machine Learning",Assistant Professor,,Yes
+4,Dr.,Qin,,Ding,dingq@ecu.edu,252-328-9686,Sci-Tech C118,"Databases, Data mining, Bioinformatics",Associate Professor,,Yes
+5,Dr.,Krishnan,,Gopal,gopal@ecu.edu,252-328-9688,Sci-Tech C118,"Combinatorics, Cryptography and Information Security, Distributed Computing, Algorithms and Theoretical Computer Science",Associate Professor,,Yes
+6,Dr.,Venkat,N,Gudivada,gudivadav15@ecu.edu,252-328-9680,Sci-Tech C-107,"Data Management/Analytics, Information Retrieval/Systems, Natural Language Processing, Computer Vision, Personalized Learning",Professor,Department Chair,Yes
+7,Dr.,Nick,,Herndon,herndonn19@ecu.edu,252-328-9696,Sci-Tech C108,"Artificial Intelligence, Machine Learning, Data Science, Big Data Analytics, and Computational Biology",Assistant Professor,,Yes
+8,Dr.,Mark,,Hills,hillsma@ecu.edu,252-328-9692,Sci-Tech C110,"Program Analysis, Programming Language Implementation, Domain-Specific Languages, Software Modeling and Verification, Software Analytics, Formal Semantics of Programming Languages",Associate Professor,Graduate Program Director,Yes
+9,Mr.,Bobby,,Hoggard,hoggardr@ecu.edu,252-328-9695,Sci-Tech C105,"Cloud Computing, Computer Architecture, Web Applications, Computer Science Education",Instructor,,Yes
+10,Mr.,John,,Jones,jonesjo@ecu.edu,252-328-9606,Sci-Tech 109,"Data Structures and Algorithms, Digital Electronics, Software Construction, Networking, Data Center Virtualization, Distributed Computing, Storage Management, Operating Systems",Adjunct Instructor,,Yes
+11,Dr.,Jonathan,A,Saddler,saddlerj20@ecu.edu,252-328-9687,Sci-Tech C117,Software Engineering,Teaching Assistant Professor,,Yes
+12,Dr.,Kamran,,Sartipi,sartipik16@ecu.edu,252-328-9694,Sci-Tech C122,"Software Engineering, Knowledge Engineering and Data Mining, Cyber Security and Data Privacy, User-Behavior based Access Control, Medical & Health Systems Integration and Informatics, Service Intelligence for Cloud, Decision Support Systems",Assistant Professor,,Yes
+13,Dr.,Ronnie,,Smith,smithron@cs.ecu.edu,252-328-9687,Sci-Tech C117,"Artificial Intelligence, Spoken Natural Languages",Research Associate Professor,,No
+14,Mr.,Joel,,Sweatte,sweattej@ecu.edu,252-328-9439,Sci-Tech C112,"Data Center Virtualization, Cloud Computing, Mainframe Platform Computing, Storage Management",Instructor,,Yes
+15,Dr.,Nasseh,,Tabrizi,tabrizim@ecu.edu,252-328-9691,Sci-Tech C112,"Big Data Analytics, Cloud Computing, Computer Vision, Software Requirement Engineering, Information Retrieval, Virtual Reality, Machine Learning, Computer Science and Software Engineering Education",Professor,,Yes
+16,Dr.,Rui,,Wu,wur18@ecu.edu,252-328-9682,Sci-Tech C107,"Data Processing and Visualization, Interdisciplinary Research",Assistant Professor,,Yes
+17,Dr.,Patyi,,Imre,patyii@ecu.edu,252-328-6461,,,Associate Professor,No,
+18,Ms.,Sumati,R,Kulkarni,,,,,Teaching Assistant,,No
+19,Ms.,Logan,G,Childers,,,,,Teaching Assistant,,No
+20,Mr.,Gregory,,Knight,,,,,Adjunct Instructor,,No
+21,Dr., Sergiy,,Vilkomir,,,,Software Testing,Associate Professor,,No
+22,Dr.,Ding,,Junhua,,,,"Software Testing, Machine Learning",Associate Professor,,No
+23,Mr.,David,M,Anderson,,,,,Teaching Assistant,,No
+24,Mr.,Aryan,,Azimzadeh,,,,,Teaching Assistant,,No
+25,Mr.,Shawn,K,Braddy,,,,,Teaching Assistant,,No
+26,Dr.,Masao,,Kishore,,,,,Associate Professor,,No
+27,Mr.,David,R,Hoffman,,,,,Teaching Assistant,,No
