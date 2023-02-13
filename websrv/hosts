@@ -1,5 +1,8 @@
 127.0.0.1	localhost
-127.0.1.1	student-vm2
+127.0.1.1	student-team2
+
+192.168.56.20 dbsrv
+192.168.56.1 mainvm
 
 # The following lines are desirable for IPv6 capable hosts
 ::1     ip6-localhost ip6-loopback
