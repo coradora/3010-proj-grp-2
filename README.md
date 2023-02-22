@@ -1,4 +1,6 @@
-# 3010 Project Group 2
+# 3010 Project Group 2 -- CSDashboard Phase 2
+
+![image](https://user-images.githubusercontent.com/78966342/220711291-ac363cce-d649-434d-bebc-e583dc6a98f3.png)
 
 ## Database Server Installation Details
 
@@ -82,6 +84,3 @@ sudo systemctl status apache2
 ```
 
 If both servers are configured properly, you should be able to access the webserver's front end by accessing 127.0.0.1 or localhost via a web browser. You should see a webpage displaying the csdashboard database.
-
-![image](https://user-images.githubusercontent.com/78966342/220711291-ac363cce-d649-434d-bebc-e583dc6a98f3.png)
-
