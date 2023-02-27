@@ -1,4 +1,4 @@
-# 3010 Project Group 2 -- CSDashboard Phase 2
+# 3010 Project Group 2 -- CSDashboard Phase 3
 
 ![image](https://user-images.githubusercontent.com/78966342/220711291-ac363cce-d649-434d-bebc-e583dc6a98f3.png)
 
