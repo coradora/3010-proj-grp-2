@@ -1,73 +1,161 @@
 <!DOCTYPE html>
 
 <html>
+
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>SENG3010 Group 2 Phase 2</title>
-    <style>
-        body {
-            width: 1000px;
-        } 
-    </style>
 
-    <!--CDNs for Bootstrap, JQuery, Datatables-->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
-    <script src="https://code.jquery.com/jquery-3.6.3.js" integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM=" crossorigin="anonymous"></script>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SENG3010 Group 2 Phase 3</title>
+  <style>
+    body {
+      width: 1000px;
+    }
+
+    table {
+      font-size: 11px;
+    }
+
+    input {
+      width: 1px;
+      white-space: nowrap;
+    }
+
+    .pagination {
+      display: flex;
+      justify-content: flex-end;
+    }
+
+    .pagination a {
+      margin-right: 20px;
+    }
+
+
+    .table {
+      position: relative;
+    }
+  </style>
+
+  <!--CDNs for Bootstrap, JQuery, Datatables-->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+  <script src="https://code.jquery.com/jquery-3.6.3.js" integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM="
+    crossorigin="anonymous"></script>
+
+  <script>
+    $(document).ready(function () {
+      $('table thead th.search').each(function () {
+        $(this).html('<input type="text" class="form-control form-control-sm">');
+      });
+
+      $('table thead input').on('keyup', function () {
+        var index = $(this).closest('th').index();
+        var value = $(this).val().toLowerCase();
+
+        $('table tbody tr').each(function () {
+            var rowValue = $(this).find('td').eq(index).text().toLowerCase();
+            $(this).toggle(rowValue.indexOf(value) !== -1);
+
+          });
+        
+      });
+    });
+  </script>
+  <!-- 
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.2/css/jquery.dataTables.css">
-    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.13.2/js/jquery.dataTables.js"></script>
+  <script type="text/javascript" charset="utf8"
+    src="https://cdn.datatables.net/1.13.2/js/jquery.dataTables.js"></script>
 
-    
-    <script>
-        $(document).ready(function () {
-            $('#csdashboard').DataTable();
-        });
-    </script>
+  
+  <script>
+    $(document).ready(function () {
+      $('#csdashboard').DataTable();
+    });
+  </script>
+  -->
 </head>
 
 <body>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
-    <!--TODO: Navbar w/ Bootstrap https://getbootstrap.com/docs/4.0/components/navbar/-->
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="#">Navbar</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-      
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
-              <a class="nav-link" href="/index.html">Instructors<span class="sr-only">(current)</span></a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="/history.html">History</a>
-            </li>
-          </ul>
-        </div>
-      </nav>
+  <!-- Bootstrap CDN -->
+  <script src="https://cdn.jsdepadding: absolute;livr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
+    crossorigin="anonymous"></script>
 
 
-    <!--Tables, handled by flask & jinja-->
-    <table id ="csdashboard" class="table display" style="width:100%">
-        <!--iterate through database table using jinja-->
-        <thead>
-            <tr>
-            {% for col_name in table_title %}
-            <th>{{col_name}}</th>
-            {% endfor %}
-            </tr>
-        </thead>
-        <tbody>
-        {% for row in sql_table %}
-        <tr>
-            {% for col in row %}
-            <td> {{col}}</td>
-            {% endfor %}
-        </tr>
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="#">ECU CS Dashboard</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item active">
+          <a class="nav-link" href="/faculty">Faculty</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/courses">Courses</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/sch_drilldown">SCH Drilldown</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/fte">FTE</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/faculty_committees">Faculty Committees</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/resources">Resources</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/history">History</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+
+  <!--Tables, handled by flask & jinja-->
+  <table id="csdashboard" class="table">
+    <!--iterate through database table using jinja-->
+    <thead>
+      <tr>
+        {% for col_name in table_title %}
+        <th>{{col_name}}</th>
         {% endfor %}
-        </tbody>
-    </table>
+      </tr>
+      <tr>
+        {% for col_name in table_title %}
+        <th class="search">
+          {% endfor %}
+      </tr>
 
-    
+    </thead>
+    <tbody>
+      {% for row in sql_table %}
+      <tr>
+        {% for col in row %}
+        <td> {{col}}</td>
+        {% endfor %}
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  {% if sql_table %}
+  <div class="pagination">
+    {% if current_page > 1 %}
+    <a href="{{ url_for('index', table_name=table_name, page=current_page-1)}}">Previous</a>
+    {% endif %}
+
+    {% if sql_table|length == 10 %}
+    <a href="{{ url_for('index', table_name=table_name, page=current_page+1)}}">Next</a>
+    {% endif %}
+  </div>
+  {% endif %}
+
 </body>
+
 </html>
