@@ -1,5 +1,6 @@
 import psycopg2
-from flask import Flask, render_template, request, url_for,redirect
+import json
+from flask import Flask, render_template, request, jsonify, url_for,redirect
 app = Flask(__name__)
 
 class DataTable:
@@ -20,10 +21,9 @@ class DataTable:
 
 @app.route('/')
 def root():
-    table = DataTable("SELECT id, concat(honorific, ' ', first, ' ', last) AS \"Full Name\", \
-                        email, phone, office, researchinterests AS \"Research Interests\", \
-                          rank, remarks, currentlyemployed AS \"Currently Employed\"\
-                          FROM csdashboard ORDER BY id")
+    table = DataTable(f"SELECT concat(honorific, ' ', first, ' ', last) AS \"Name\", rank AS \"Rank\", \
+                        email AS \"E-Mail\", phone AS \"Phone\", office AS \"Office\", researchinterests AS \"Research Interests\", \
+                        remarks AS \"Remarks\" FROM csdashboard ORDER BY id")
     return render_template('index.html', sql_table = table.log, table_title=table.col_names)
 
 # runs index() function when accessing localhost/hostname (127.0.0.1 in webbrowser)
@@ -31,12 +31,10 @@ def root():
 @app.route('/<table_name>/page/<int:page>')
 def index(table_name, page=1):
     print(table_name)
-    offset = (page - 1) * 10
     if(table_name == 'faculty'):
-        table = DataTable(f"SELECT concat(honorific, ' ', first, ' ', last) AS \"Full Name\", \
+        table = DataTable(f"SELECT concat(honorific, ' ', first, ' ', last) AS \"Name\", rank AS \"Rank\", \
                         email AS \"E-Mail\", phone AS \"Phone\", office AS \"Office\", researchinterests AS \"Research Interests\", \
-                          rank AS \"Rank\", remarks AS \"Remarks\", currentlyemployed AS \"Currently Employed\"\
-                          FROM csdashboard ORDER BY id LIMIT 10 OFFSET {offset}")
+                        remarks AS \"Remarks\" FROM csdashboard ORDER BY id")
     
     elif(table_name == 'history'):
         table = DataTable("SELECT CONCAT(classhistory.prefix, ' ', classhistory.number) as \"Course\", courses.title AS \"Title\", \
@@ -82,9 +80,16 @@ def index(table_name, page=1):
         search_term = request.form.get(table.col_names)
         print(search_term)
 
-    return render_template('index.html', sql_table = table.log, table_title=table.col_names, table_name = table_name, current_page=page)
+    return render_template('index.html', sql_table = table.log, table_title=table.col_names, table_name = table_name)
 
+'''@app.route('/search/<table_name>', methods=['GET'])
+def search_table():
+    table_name = request.args.get('table_name')
+    search_term = request.args.get('search_term')
+    page = int(request.args.get('page', 1))
 
+    result = index(table_name, page=page, search_term=search_term)
+    return result'''
 
 @app.route('/admin')
 def admin():
