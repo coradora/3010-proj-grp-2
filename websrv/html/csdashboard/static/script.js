@@ -1,130 +1,87 @@
-const rowsPerPage = 10;
-var filteredRows = [];
-
-
-function displayDate(){
+// Displays the current date on the navbar
+function displayDate() {
     var currentDate = new Date();
     var dateString = currentDate.toLocaleDateString();
     document.getElementById('date-display').textContent = dateString;
 }
 
-// Sets a cap of rows a table may display on a given page. 
-function paginateTable(page) {
-    var start = (page - 1) * rowsPerPage;
-    var end = start + rowsPerPage;
-
-    $('table tbody tr').hide();
-    for (var i = start; i < end && i < filteredRows.length; i++) {
-        $(filteredRows[i]).show();
-    }
-}
-
-
-// Filters the table data based on search query
-function filterTable() {
-    filteredRows = [];
-    $('table tbody tr').each(function () {
-        var showRow = true;
-        $(this).find('td').each(function (index) {
-            var searchValue = $('table thead input').eq(index).val().toLowerCase();
-            var rowValue = $(this).text().toLowerCase();
-            if (rowValue.indexOf(searchValue) === -1) {
-                showRow = false;
-            }
-        });
-        if (showRow) {
-            filteredRows.push(this);
-        }
-    });
-}
-
-
-function updatePaginationLinks(currentPage){
-    var totalPages = Math.ceil(filteredRows.length / rowsPerPage);
-
-    var maxVisiblePages = 5;
-    var firstVisiblePage = Math.max(1, currentPage - Math.floor(maxVisiblePages / 2));
-    var lastVisiblePage = Math.min(totalPages, firstVisiblePage + maxVisiblePages - 1);
-
-    // Remove existing pagination links/ellipses except for previous and next buttons.
-    $('.pagination .page-link:not(.prev):not(.next)').closest('.page-item').not('.prev, .next').remove();
-    $('.pagination .pagination-ellipsis').closest('.page-item').remove();
-
-    // Add pagination links
-    for (var i = firstVisiblePage; i <= lastVisiblePage; i++){
-        var pageLink = $('<a href="#" class="page-link">' + i + '</a>');
-        var pageItem = $('<li class="page-item"></li>');
-        pageItem.append(pageLink);
-        if(i === currentPage){
-            pageItem.addClass('active');
-        }
-
-        pageLink.on('click', function(e)
-        {
-            e.preventDefault();
-            var newPage = parseInt($(this).text());
-            paginateTable(newPage);
-            updatePaginationLinks(newPage);
-        });
-
-        $('.pagination .next').closest('.page-item').before(pageItem);
-    }
-
-    if(firstVisiblePage > 1) {
-        var ellipsis = $('<span class="pagination-ellipsis">&hellip;</span>');
-        var ellipsisItem = $('<li class="page-item disabled"></li>');
-        ellipsisItem.append(ellipsis);
-        $('.pagination .prev').closest('.page-item').after(ellipsisItem);
-    }
-
-    if(lastVisiblePage < totalPages) {
-        var ellipsis = $('<span class="pagination-ellipsis">&hellip;</span>');
-        var ellipsisItem = $('<li class="page-item disabled"></li>');
-        ellipsisItem.append(ellipsis);
-        $('.pagination .next').closest('.page-item').before(ellipsisItem);
-    }
+// Updates the active link on the navbar
+function updateActive() {
+    var pathname = window.location.pathname;
+    pathname = pathname.slice(1);
+    $("#" + pathname).addClass("active");
 }
 
 $(document).ready(function () {
+    // Calls displayDate and updateActive
     displayDate();
+    updateActive();
 
-    $('table thead th.search').each(function () {
-        $(this).html('<input type="text" class="form-control form-control-sm">');
-    });
+    // Setup DataTable - add a text input to each footer cell
+    $('#csdashboard thead tr')
+        .clone(true)
+        .addClass('filters')
+        .appendTo('#csdashboard thead');
 
-    $('table thead input').on('keyup', function () {
-        filterTable();
-        paginateTable(1);
-        updatePaginationLinks(1);
-        //$('.pagination .current-page').text(1);
-    });
+    var table = $('#csdashboard').DataTable({
+        orderCellsTop: true,
+        fixedHeader: true,
+        "order": [], // ignore default DataTable ordering
+        "searching": true,
+        "ordering": true,
+        // DOM control elements - 'l' enables length input control
+        // 'r' enables processing display element, 't' enables table, 
+        // 'i' enables table info, 'p' enables pagination. 
+        // Useful for disabling certain visual elements but keeping functionality
+        dom: 'lrtip',
+        initComplete: function () {
+            var api = this.api();
 
-    // Initialize filteredRows array with current row content
-    filterTable()
-    paginateTable(1);
-    updatePaginationLinks(1);
+            // For each column
+            api
+                .columns()
+                .eq(0)
+                .each(function (colIdx) {
+                    // Set the header cell to contain the input element
+                    var cell = $('.filters th').eq(
+                        $(api.column(colIdx).header()).index()
+                    );
+                    var title = $(cell).text();
+                    $(cell).html('<input type="text"' + title + '" style="width: 75%;"/>');
 
-    $('.pagination-container').on('click', '.pagination .prev', function (e) {
-        
-        e.preventDefault();
-        var currentPage = parseInt($('.pagination .page-item.active .page-link').text());
-        if (currentPage > 1) {
-            console.log('prev!')
-            paginateTable(currentPage - 1);
-            updatePaginationLinks(currentPage - 1);
-        }
-    });
+                    // On every keypress in this input
+                    $(
+                        'input',
+                        $('.filters th').eq($(api.column(colIdx).header()).index())
+                    )
+                        .off('keyup change')
+                        .on('change', function (e) {
+                            // Get the search value
+                            $(this).attr('title', $(this).val());
+                            var regexr = '({search})'; //$(this).parents('th').find('select').val();
 
-    $('.pagination-container').on('click', '.pagination .next', function(e){
-        
-        e.preventDefault();
-        var currentPage = parseInt($('.pagination .page-item.active .page-link').text());
-        var totalPages = Math.ceil(filteredRows.length / rowsPerPage);
-        console.log(currentPage)
-        if (currentPage < totalPages) {
-            paginateTable(currentPage + 1);
-            updatePaginationLinks(currentPage + 1);
-        }
+                            var cursorPosition = this.selectionStart;
+                            // Search the column for that value
+                            api
+                                .column(colIdx)
+                                .search(
+                                    this.value != ''
+                                        ? regexr.replace('{search}', '(((' + this.value + ')))')
+                                        : '',
+                                    this.value != '',
+                                    this.value == ''
+                                )
+                                .draw();
+                        })
+                        .on('keyup', function (e) {
+                            e.stopPropagation();
+
+                            $(this).trigger('change');
+                            $(this)
+                                .focus()[0]
+                                .setSelectionRange(cursorPosition, cursorPosition);
+                        });
+                });
+        },
     });
 });
-
