@@ -1,40 +1,46 @@
-# 3010 Project Group 2 -- CSDashboard Phase 3
+# CSDashboard: Phase 3 - Group 2
 
 ![image](https://user-images.githubusercontent.com/78966342/229600175-89ff804f-fcbd-40a9-89a9-eb103eb0bbdf.png)
 
-## Database Server Installation Details
+## Table of Contents
 
-Install postgresql with the following command in the terminal
+1. [Database Server Installation Instructions](#database-server-installation-instructions)
+2. [Web Server Installation Instructions](#web-server-installation-instructions)
+3. [Usage](#usage)
+
+## Database Server Installation Instructions
+
+1. Install PostgreSQL by executing the following command in your terminal:
 ```
 sudo apt install postgresql-12
 ```
 
-Import the database at 'dbsrv/db02132023.sql' with the following commands (or using pgAdmin), as well as the config files. 
+2. Import the database at **'dbsrv/db04032023.sql'** with the following commands (or using pgAdmin), as well as the config files. 
 ```
-psql student < .../dbsrv/db02132023.sql
+psql student < .../dbsrv/db04032023.sql
 cp /dbsrv/config/hostname /etc/
 cp /dbsrv/config/hosts /etc/
 ```
 
-Restart postgresql by running the following command in the terminal:
+3. Restart PostgreSQL by running:
 ```
 sudo systemctl restart postgresql
 ```
 
-## Web Server Installation Details
+## Web Server Installation Instructions
 
-Install Apache2 (in accordance with https://ubuntu.com/tutorials/install-and-configure-apache#1-overview) by typing the following command in the terminal.
+1. Install Apache2 as per the [official Ubuntu tutorial](https://ubuntu.com/tutorials/install-and-configure-apache#1-overview) using the following command:
 ```
 sudo apt install apache2
 ```
 
-Import the web server config files with the following commands
+2. Copy the web server configuration files with these commands:
 ```
 cp -r /websrv/config/etc /etc/
 cp -r /websrv/html /var/
 ```
 
-The file structures should look like this:
+The file structure should resemble:
 
 ```
 ---/etc/apache2/sites-available/csdashboard.conf
@@ -44,45 +50,44 @@ The file structures should look like this:
 ---/var/html/index.wsgi
 ```
 
-The web server component of this project utilizes Python. By default, Ubuntu 20.04 has Python3 preinstalled, but can be installed via 
+3. The web server component requires Python. Ubuntu 20.04 typically comes with Python3 pre-installed. If necessary, install Python3 and pip using:
 ```
 sudo apt install python3 &&
 sudo apt install python3-pip
 ```
 
-All required python modules can be found in /websrv/html/csdashboard/requirements.txt. You can install these requirements in terminal using the following command
+4. Install the necessary Python modules listed in /websrv/html/csdashboard/requirements.txt by executing:
 
 ```
 pip install -r requirements.txt
 ```
+For more information, consult the [Psycopg2 documentation](https://www.psycopg.org/docs/) and [Flask documentation](https://flask.palletsprojects.com/en/2.2.x/).
+https://plainenglish.io/blog/how-to-securely-deploy-flask-with-apache-in-a-linux-server-environment
 
-Psycopg2 documentation can be found here: https://www.psycopg.org/docs/
-Flask documentation can be found here: https://flask.palletsprojects.com/en/2.2.x/
-
-We configured our Apache server (in accordance with https://plainenglish.io/blog/how-to-securely-deploy-flask-with-apache-in-a-linux-server-environment) with the following commands:
+5. Configure the Apache server as described in [this tutorial](https://plainenglish.io/blog/how-to-securely-deploy-flask-with-apache-in-a-linux-server-environment) with the following commands:
 
 ```
 sudo a2ensite csdashboard.conf
 sudo a2dissite 000-default.conf
 ```
 
-Restart apache2 with the following command
+6. Restart Apache2:
 ```
 sudo systemctl restart apache2
 ```
 
 ## Usage 
-The project is configured to use two hosts -- a dbsrv for the database, and a websrv for the web server.
-On the database server, ensure that postgresql is running with the student database and csdashboard table. 
+This project utilizes two hosts: a database server (dbsrv) and a web server (websrv).
+1. On the database server, ensure that PostgreSQL is running with the **student** database and **csdashboard** table:
 ```
 sudo systemctl status postgresql
 ```
 
-On the webserver, ensure apache2 is running with the following command
+2. On the webserver, confirm that Apache2 is running:
 ```
 sudo systemctl status apache2
 ```
 
-If both servers are configured properly, you should be able to access the webserver's front end by accessing 127.0.0.1 or localhost via a web browser. You should see a webpage displaying the Faculty dashboard, with a navbar leading to other tables. 
+3. If both servers are correctly configured, access the webserver's frontend by navigating to 127.0.0.1 or localhost in a web browser. The Faculty dashboard should appear, featuring a navigation bar leading to other tables.
 
-In this phase, a custom query page was also introduced, which allows for custom SELECT queries from the user. This is only temporarily included to showcase a means of input sanitization for forms that interact with Flask and our backend system. The custom query page will return an error if invalid, empty, or 'dangerous' queries are entered, such as DROP/UPDATE/INSERT/DELETE etc. 
+During this phase, we introduced a custom query page for executing user-defined SELECT queries. This temporary feature demonstrates input sanitization for forms interacting with Flask and our backend system. The custom query page returns an error for invalid, empty, or potentially harmful queries, such as DROP, UPDATE, INSERT, or DELETE.
