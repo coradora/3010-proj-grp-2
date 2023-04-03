@@ -1,6 +1,6 @@
 # 3010 Project Group 2 -- CSDashboard Phase 3
 
-![image](https://user-images.githubusercontent.com/78966342/220711291-ac363cce-d649-434d-bebc-e583dc6a98f3.png)
+![image](https://user-images.githubusercontent.com/78966342/229600175-89ff804f-fcbd-40a9-89a9-eb103eb0bbdf.png)
 
 ## Database Server Installation Details
 
@@ -83,4 +83,6 @@ On the webserver, ensure apache2 is running with the following command
 sudo systemctl status apache2
 ```
 
-If both servers are configured properly, you should be able to access the webserver's front end by accessing 127.0.0.1 or localhost via a web browser. You should see a webpage displaying the csdashboard database.
+If both servers are configured properly, you should be able to access the webserver's front end by accessing 127.0.0.1 or localhost via a web browser. You should see a webpage displaying the Faculty dashboard, with a navbar leading to other tables. 
+
+In this phase, a custom query page was also introduced, which allows for custom SELECT queries from the user. This is only temporarily included to showcase a means of input sanitization for forms that interact with Flask and our backend system. The custom query page will return an error if invalid, empty, or 'dangerous' queries are entered, such as DROP/UPDATE/INSERT/DELETE etc. 
