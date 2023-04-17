@@ -1,0 +1,8 @@
+# CSDashboard DBSrv Dockerfile
+FROM ubuntu:22.04
+
+COPY ./entrypoint.sh ./entrypoint.sh
+COPY ./db.sql ./db.sql
+EXPOSE 5432
+RUN chmod +rwx /entrypoint.sh
+CMD ["./entrypoint.sh"]
