@@ -1,4 +1,4 @@
-# CSDashboard: Phase 3 - Group 2
+# CSDashboard: Phase 4 - Group 2
 
 ![image](https://user-images.githubusercontent.com/78966342/229600175-89ff804f-fcbd-40a9-89a9-eb103eb0bbdf.png)
 
@@ -10,22 +10,51 @@
 
 ## Database Server Installation Instructions
 
-1. Install PostgreSQL by executing the following command in your terminal:
+1. Set up the Docker repository with the following [commands](https://docs.docker.com/engine/install/ubuntu/)
+* Update the apt package index and install packages to allow apt to use a repository over HTTPS:
 ```
-sudo apt install postgresql-12
+sudo apt-get update
+sudo apt-get install \
+    ca-certificates \
+    curl \
+    gnupg
+```
+* Add Docker’s official GPG key:
+```
+sudo install -m 0755 -d /etc/apt/keyrings
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+sudo chmod a+r /etc/apt/keyrings/docker.gpg
+```
+* Use the following command to set up the repository:
+```
+echo \
+  "deb [arch="$(dpkg --print-architecture)" signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu \
+  "$(. /etc/os-release && echo "$VERSION_CODENAME")" stable" | \
+  sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
 ```
 
-2. Import the database at **'dbsrv/db04032023.sql'** with the following commands (or using pgAdmin), as well as the config files. 
+2. Install Docker by executing the following command in your terminal:
 ```
-psql student < .../dbsrv/db04032023.sql
-cp /dbsrv/config/hostname /etc/
-cp /dbsrv/config/hosts /etc/
+sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
 ```
 
-3. Restart PostgreSQL by running:
+3. Create a docker network by executing the following command in the terminal:
 ```
-sudo systemctl restart postgresql
+sudo docker network create --subnet=192.168.56.0/24 dockernetwork
 ```
+
+3. Navigate to dbsrv/docker-container in the terminal and build the dockerfile.
+```
+sudo docker build -t dockerfile:latest .
+```
+
+4. Start up the database docker container with the following command:
+```
+sudo docker run -d --network dockernetwork --ip 192.168.56.20 -p 5432:5432 dockerfile:latest
+```
+* The defined dockernetwork network and static IP address are to allow ease of access to the database with our Flask server below. We expose port 5432 to allow our host to connect to PostgreSQL.
+
+5. After several minutes, setup should be complete and you should be able to communicate with the docker container. The dockerfile is configured such that the setup process will only be required on the first launch, and subsequent launches will load the database immediately. This will allow persistent changes to be made to the database, if necessary.
 
 ## Web Server Installation Instructions
 
