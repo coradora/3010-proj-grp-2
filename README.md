@@ -50,7 +50,7 @@ sudo docker build -t dockerfile:latest .
 
 4. Start up the database docker container with the following command:
 ```
-sudo docker run -d --network dockernetwork --ip 192.168.56.20 -p 5432:5432 dockerfile:latest
+sudo docker run -d --network dockernetwork --ip 192.168.56.20 -p 5432:5432 --restart=always dockerfile:latest
 ```
 * The defined dockernetwork network and static IP address are to allow ease of access to the database with our Flask server below. We expose port 5432 to allow our host to connect to PostgreSQL.
 
@@ -65,8 +65,8 @@ sudo apt install apache2
 
 2. Copy the web server configuration files with these commands:
 ```
-cp -r /websrv/config/etc /etc/
-cp -r /websrv/html /var/
+cp -r /websrv/config/etc/. /etc/
+cp -r /websrv/html/. /var/
 ```
 
 The file structure should resemble:
@@ -100,7 +100,12 @@ sudo a2ensite csdashboard.conf
 sudo a2dissite 000-default.conf
 ```
 
-6. Restart Apache2:
+6. A logs folder may be required in the csdashboard folder copied over in step 2. You can create the folder with the following command.
+'''
+sudo touch /var/www/html/csdashboard/logs
+'''
+
+7. Restart Apache2:
 ```
 sudo systemctl restart apache2
 ```
