@@ -35,6 +35,7 @@ echo \
 
 2. Install Docker by executing the following command in your terminal:
 ```
+sudo apt update
 sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
 ```
 
@@ -102,7 +103,7 @@ sudo a2dissite 000-default.conf
 
 6. A logs folder may be required in the csdashboard folder copied over in step 2. You can create the folder with the following command.
 '''
-sudo touch /var/www/html/csdashboard/logs
+sudo mkdir /var/www/html/csdashboard/logs
 '''
 
 7. Restart Apache2:
