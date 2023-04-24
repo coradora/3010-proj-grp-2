@@ -119,4 +119,4 @@ sudo systemctl status apache2
 
 3. If both servers are correctly configured, access the webserver's frontend by navigating to 127.0.0.1 or localhost in a web browser. The Faculty dashboard should appear, featuring a navigation bar leading to other tables.
 
-During this phase, we introduced a custom query page for executing user-defined SELECT queries. This temporary feature demonstrates input sanitization for forms interacting with Flask and our backend system. The custom query page returns an error for invalid, empty, or potentially harmful queries, such as DROP, UPDATE, INSERT, or DELETE.
+During this phase, we implemented a Docker container that would allow us to more quickly build, test, and deploy the dashboard application. 
